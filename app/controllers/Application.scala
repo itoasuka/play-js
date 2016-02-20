@@ -5,11 +5,11 @@ import play.api.mvc._
 
 class Application extends Controller {
 
-  def index = Action {
+  def index: Action[AnyContent] = Action {
     Ok(views.html.index())
   }
 
-  def greetingApi = Action {
+  def greetingApi: Action[AnyContent] = Action {
     Ok(Json.obj("greeting" -> "こんにちは、世界！"))
   }
 }
