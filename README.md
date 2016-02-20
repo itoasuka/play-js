@@ -27,7 +27,7 @@ sbt で gulp をキックする部分は [この記事](http://qiita.com/mmizuta
 
     sbt clean coverage test coverageReport
 
-test タスクを実行すると、gulp build test も実行します。
+test タスクを実行すると、gulp build も実行します。
 
 run タスクを実行すると、gulp watch も実行します。
 
@@ -52,6 +52,7 @@ Web API 呼び出しの部分は [Sinon.JS](http://sinonjs.org/) を使用した
 |test       |テストを実行します。karma タスクのエイリアスです。               |
 |watch      |webpack-dev-server を起動します。                                |
 |karma:watch|karma を singleRun: false で起動します。                         |
+|eslint     |eslint のレポートを出力します。                                  |
 
 
 なぜ Scala.js を使わないのか？

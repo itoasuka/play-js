@@ -7,6 +7,8 @@ const runSequence = require('run-sequence');
 const karma = require('karma');
 const path = require('path');
 const minimist = require('minimist');
+const fs = require('fs');
+const mkdirp = require('mkdirp');
 
 const args = minimist(process.argv.slice(2));
 const md5 = () => {
@@ -56,6 +58,7 @@ gulp.task('watch', ['webpack-dev-server']);
 gulp.task('webpack', () => {
   const webpackStream = require('webpack-stream');
   const config = require('./webpack.config.js');
+  config.module.preLoaders = config.module.preLoaders.filter((e) => e.loader !== 'eslint-loader'); 
   config.plugins = [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"',
@@ -121,8 +124,15 @@ gulp.task('karma:watch', (cb) => {
   new karma.Server({
     configFile: __dirname + '/karma.conf.js',
     singleRun: false,
-    colors: !args.COLORLESS,
+    colors: !args.COLORLESS
   }, cb).start();
 });
 
 gulp.task('test', ['karma']);
+
+gulp.task('eslint', () => {
+  mkdirp.sync('build/eslint');
+  return gulp.src(['app/**/*.js', 'app/**/*.jsx'])
+    .pipe($.eslint())
+    .pipe($.eslint.format('checkstyle', fs.createWriteStream('build/eslint/checkstyle-result.xml')));
+});
