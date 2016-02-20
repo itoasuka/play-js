@@ -39,11 +39,12 @@ gulp.task('webpack-dev-server', () => {
     publicPath: config.output.publicPath,
     stats: {
       colors: !args.COLORLESS
-    }
+    },
+    contentBase: 'http://localhost:9000'
   }).listen(8080, 'localhost', (err) => {
     if(err) throw new $.util.PluginError('webpack-dev-server', err);
     // Server listening
-    $.util.log('[webpack-dev-server]', 'http://localhost:8080/webpack-dev-server/index.html');
+    $.util.log('[webpack-dev-server]', 'http://localhost:8080/webpack-dev-server/');
 
     // keep the server alive or continue?
     // callback();
