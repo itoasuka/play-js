@@ -2,7 +2,7 @@ import React from 'react';
 import TestUtils from 'react-addons-test-utils';
 import assert from 'power-assert';
 
-import Hello from '../app/component/Hello.jsx';
+import Hello from '../app/webpack/component/Hello.jsx';
 
 describe('main', () => {
 

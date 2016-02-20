@@ -3,7 +3,7 @@ const webpack = require('webpack');
 
 module.exports = {
   entry: {
-    app: ['./app/main.js']
+    app: ['./app/webpack/main.js']
   },
   output: {
     path: path.resolve(__dirname, 'build/assets'),

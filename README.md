@@ -53,6 +53,7 @@ Web API 呼び出しの部分は [Sinon.JS](http://sinonjs.org/) を使用した
 |watch      |webpack-dev-server を起動します。                                |
 |karma:watch|karma を singleRun: false で起動します。                         |
 |eslint     |eslint のレポートを出力します。                                  |
+|css        |sass の処理を行います。                                          |
 
 
 なぜ Scala.js を使わないのか？

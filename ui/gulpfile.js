@@ -53,7 +53,7 @@ gulp.task('webpack-dev-server', () => {
   });
 });
 
-gulp.task('watch', ['webpack-dev-server']);
+gulp.task('watch', ['webpack-dev-server', 'css:watch']);
 
 gulp.task('webpack', () => {
   const webpackStream = require('webpack-stream');
@@ -70,7 +70,7 @@ gulp.task('webpack', () => {
     new webpack.optimize.AggressiveMergingPlugin()
   ];
 
-  return gulp.src('app/main.js')
+  return gulp.src('app/webpack/main.js')
     .pipe(webpackStream(config))
     .pipe(gulp.dest('build/assets/'));
 });
@@ -88,7 +88,7 @@ gulp.task('gzip', () => {
 });
 
 gulp.task('build', ['clean'], (cb) => {
-  runSequence('webpack', 'md5', 'gzip', cb);
+  runSequence(['webpack', 'css'], 'md5', 'gzip', cb);
 });
 
 gulp.task('karma', (cb) => {
@@ -99,14 +99,14 @@ gulp.task('karma', (cb) => {
   };
   webpackConfig.module.loaders = webpackConfig.module.loaders.map((e) => {
     if (e.loader === 'babel') {
-      e.exclude.push(path.resolve('app/'));
+      e.exclude.push(path.resolve('app/webpack'));
     }
 
     return e;
   });
   webpackConfig.module.loaders.push({
     test: /\.jsx?/,
-    include: path.resolve('app/'),
+    include: path.resolve('app/webpack'),
     loader: 'isparta'
   });
 
@@ -132,7 +132,25 @@ gulp.task('test', ['karma']);
 
 gulp.task('eslint', () => {
   mkdirp.sync('build/eslint');
-  return gulp.src(['app/**/*.js', 'app/**/*.jsx'])
+  return gulp.src(['app/webpack/**/*.js', 'app/webpack/**/*.jsx'])
     .pipe($.eslint())
     .pipe($.eslint.format('checkstyle', fs.createWriteStream('build/eslint/checkstyle-result.xml')));
+});
+
+gulp.task('css', () => {
+  return gulp.src('app/css/**/*')
+    .pipe($.plumber())
+    .pipe($.compass({
+      css: 'build/assets',
+      sass: 'app/css',
+      comments: false,
+      relative: false
+    }))
+    .pipe($.autoprefixer('last 2 version'))
+    .pipe($.minifyCss())
+    .pipe(gulp.dest('build/assets'));
+});
+
+gulp.task('css:watch', () => {
+  gulp.watch(['app/css/**/*'], ['css']);
 });
