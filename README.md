@@ -6,8 +6,21 @@ gulp + webpack + babel で作成するパターンのサンプルです。
 
 sbt で gulp をキックする部分は [この記事](http://qiita.com/mmizutani/items/9def492ea7bbfb35a57a) を~~まるパク~~参考にさせていただきました。
 
-サーバサイド
-------------
+
+開発での使い方
+--------------
+
+    sbt run
+
+で、play が開発モードで起動するわけですが、同時に webpack-dev-server も起動します。
+
+ブラウザで動作確認する場合は、従来の Play Framework のように [http://localhost:9000/](http://localhost:9000/)
+を使用してももちろんかまいませんが、[http://localhost:8080/webpack-dev-server/](http://localhost:8080/webpack-dev-server/)
+にアクセスすることにより、webpack-dev-server の自動リフレッシュ機能の恩恵を得ることができます。
+
+
+サーバサイドの構成
+------------------
 
 テストは、[ScalaTest](http://www.scalatest.org/) で書きなおしています。また、ブラウザによるテストは HtmlUnit ではなく Chrome と Firefox
 を使用します。また、[Scoverage](http://scoverage.org/) によるカバレッジを取得します。
@@ -19,8 +32,8 @@ test タスクを実行すると、gulp build test も実行します。
 run タスクを実行すると、gulp watch も実行します。
 
 
-クライアントサイド
-------------------
+クライアントサイドの構成
+------------------------
 
 [gulp](http://gulpjs.com/) + [webpack](https://webpack.github.io/) + [Babel](https://babeljs.io/) でビルドします。
 
