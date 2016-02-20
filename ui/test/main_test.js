@@ -1,11 +1,14 @@
+import React from 'react';
+import TestUtils from 'react-addons-test-utils';
 import assert from 'power-assert';
+
+import Hello from '../app/component/Hello.jsx';
 
 describe('main', () => {
 
   let server;
 
   before(() => {
-    document.body.innerHTML = window.__html__["test/fixtures/base.html"];
     server = sinon.fakeServer.create();
   });
     
@@ -23,14 +26,26 @@ describe('main', () => {
     });
 
     server.respondWith('GET', /\/0\/greeting$/, [ 200, head, body ]);
-    
-    const result = require('../app/main');
+
+    const rendered = TestUtils.renderIntoDocument(<Hello />);
+    const elem = TestUtils.scryRenderedDOMComponentsWithTag(rendered, 'div');
+    assert(elem.length === 1);
+    assert(elem[0].textContent === 'おまちください');
 
     server.respond();
 
-    return result.default.then(() => {
-      const elem = document.getElementById('greeting');
-      assert(elem.innerHTML === 'こんにちは、世界！');
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        try {
+          const elem = TestUtils.scryRenderedDOMComponentsWithTag(rendered, 'div');
+          assert(elem.length === 1);
+          assert(elem[0].textContent === 'こんにちは、世界！');
+        } catch (e) {
+          reject(e);
+        }
+
+        resolve();
+      }, 0);
     });
   });
 });
