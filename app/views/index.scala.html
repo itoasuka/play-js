@@ -1,0 +1,18 @@
+@()
+@import play.api.Play.current
+<!DOCTYPE html>
+
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <div id="greeting" class="greeting"></div>
+    @if(play.api.Play.isDev) {
+      <script src="http://localhost:8080/assets/bundle.js"></script>
+    } else {
+      <script src="@routes.Assets.versioned("bundle.js")"></script>
+    }
+  </body>
+</html>
