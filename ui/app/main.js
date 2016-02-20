@@ -1,11 +1,10 @@
 import "babel-polyfill";
-import { greeting } from './util';
+import React from 'react';
+import ReactDOM from 'react-dom';
+
 import './main.scss';
 
-const result = greeting()
-  .then((response) => {
-    const elem = document.getElementById('greeting');
-    elem.innerHTML = response.greeting;
-  });
-export default result;
+import Hello from './component/Hello.jsx';
+
+ReactDOM.render(<Hello />, document.getElementById('greeting'));
 

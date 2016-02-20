@@ -60,8 +60,8 @@ object PlayGulp {
     // Executes `gulp clean` before `sbt clean`
     clean <<= clean dependsOn gulpClean,
 
-    // Executes `gulp test` before `sbt test` (optional)
-    (test in Test) <<= (test in Test) dependsOn gulpTest,
+    // Executes `gulp test` before `sbt build`
+    (test in Test) <<= (test in Test) dependsOn gulpBuild,
 
     // Ensures that static assets in the ui/dist directory are packaged into
     // target/scala-2.11/play-gulp_2.11-1.0.0-web-asset.jar/public when the play app is compiled
