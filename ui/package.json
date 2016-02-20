@@ -42,6 +42,7 @@
     "karma-sinon": "^1.0.4",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^1.7.0",
+    "minimist": "^1.2.0",
     "node-sass": "^3.4.2",
     "power-assert": "^1.2.0",
     "run-sequence": "^1.1.5",

@@ -82,12 +82,13 @@ object PlayGulp {
   )
 
   private def runGulp(base: sbt.File, fileName: String, args: List[String] = List.empty): Process = {
+    val maybeColorless = Option(System.getProperty("sbt.log.noformat")).filter(_.toLowerCase == "true").map(_ => "--COLORLESS")
     if (System.getProperty("os.name").startsWith("Windows")) {
-      val process: ProcessBuilder = Process("cmd" :: "/c" :: "gulp" :: "--gulpfile=" + fileName :: args, base)
+      val process: ProcessBuilder = Process("cmd" :: "/c" :: "gulp" :: "--gulpfile=" + fileName :: maybeColorless.toList ::: args, base)
       println(s"Will run: ${process.toString} in ${base.getPath}")
       process.run()
     } else {
-      val process: ProcessBuilder = Process("gulp" :: "--gulpfile=" + fileName :: args, base)
+      val process: ProcessBuilder = Process("gulp" :: "--gulpfile=" + fileName :: maybeColorless.toList ::: args, base)
       println(s"Will run: ${process.toString} in ${base.getPath}")
       process.run()
     }

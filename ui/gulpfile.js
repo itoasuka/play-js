@@ -6,7 +6,9 @@ const webpack = require('webpack');
 const runSequence = require('run-sequence');
 const karma = require('karma');
 const path = require('path');
+const minimist = require('minimist');
 
+const args = minimist(process.argv.slice(2));
 const md5 = () => {
   const through2 = require('through2');
   const crypto = require('crypto');
@@ -36,7 +38,7 @@ gulp.task('webpack-dev-server', () => {
   new WebpackDevServer(compiler, {
     publicPath: config.output.publicPath,
     stats: {
-      colors: true
+      colors: !args.COLORLESS
     }
   }).listen(8080, 'localhost', (err) => {
     if(err) throw new $.util.PluginError('webpack-dev-server', err);
@@ -109,6 +111,7 @@ gulp.task('karma', (cb) => {
     autoWatch: false,
     singleRun: true,
     reporters: ['dots', 'coverage', 'junit'],
+    colors: !args.COLORLESS,
     webpack: webpackConfig
   }, cb).start();
 });
@@ -116,7 +119,8 @@ gulp.task('karma', (cb) => {
 gulp.task('karma:watch', (cb) => {
   new karma.Server({
     configFile: __dirname + '/karma.conf.js',
-    singleRun: false
+    singleRun: false,
+    colors: !args.COLORLESS,
   }, cb).start();
 });
 
