@@ -19,7 +19,10 @@ module.exports = {
   debug: true,
   devtool: 'source-map',
   plugins: [
-    new webpack.DefinePlugin({'__DEV__': true})
+    new webpack.DefinePlugin({'__DEV__': true}),
+    new webpack.ProvidePlugin({
+      'Promise': 'bluebird'
+    })
   ],
   module: {
     preLoaders: [

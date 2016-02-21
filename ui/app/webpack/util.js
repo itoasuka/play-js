@@ -1,11 +1,8 @@
-import superagent from 'superagent';
-import superagentPromisePlugin from 'superagent-promise-plugin';
+import request from 'superagent-bluebird-promise';
 
 export function greeting() {
-  return superagent
+  return request
     .get('/0/greeting')
-    .use(superagentPromisePlugin)
-    .end()
     .then((response) => {
       return JSON.parse(response.text);
     });

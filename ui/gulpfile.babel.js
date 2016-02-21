@@ -85,7 +85,10 @@ gulp.task('webpack', (cb) => {
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.optimize.AggressiveMergingPlugin()
+    new webpack.optimize.AggressiveMergingPlugin(),
+    new webpack.ProvidePlugin({
+      'Promise': 'bluebird'
+    })
   ];
 
   webpack(config, (err, stats) => {

@@ -1,6 +1,8 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 import assert from 'power-assert';
+import superagent from 'superagent';
 
 import Hello from '../app/webpack/component/Hello.jsx';
 
@@ -47,5 +49,13 @@ describe('main', () => {
         resolve();
       }, 0);
     });
+  });
+  it('あいさつをあきらめる', () => {
+    const rendered = TestUtils.renderIntoDocument(<Hello />);
+
+    const spy = sinon.spy(rendered.promise, "cancel");
+    ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(rendered).parentNode);  
+
+    assert(spy.calledOnce);
   });
 });

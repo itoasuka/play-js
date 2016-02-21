@@ -1,5 +1,4 @@
 import React from 'react';
-import superagent from 'superagent';
 
 import { greeting } from '../util.js';
 
@@ -11,16 +10,20 @@ export default class Hello extends React.Component {
   constructor(props) {
     super(props);
     this.state = {greeting: 'おまちください'};
+    this.promise = null;
   }
 
   componentDidMount() {
-    greeting().then((res) => {
+    this.promise = greeting().then((res) => {
+      this.promise = null;
       this.setState(res);
     });
   }
 
   componentWillUnmount() {
-    superagent.abort();
+    if (this.promise) {
+      this.promise.cancel();
+    }
   }
 
   render() {
