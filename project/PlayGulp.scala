@@ -20,7 +20,7 @@ object PlayGulp {
     // Specifies the location of the root directory of the Gulp project relative to the Play app root
     gulpDirectory <<= (baseDirectory in Compile) { _ / "ui" },
 
-    gulpFile := "gulpfile.js",
+    gulpFile := "gulpfile.babel.js",
 
     gulp := {
       val base = (gulpDirectory in Compile).value
@@ -82,13 +82,12 @@ object PlayGulp {
   )
 
   private def runGulp(base: sbt.File, fileName: String, args: List[String] = List.empty): Process = {
-    val maybeColorless = Option(System.getProperty("sbt.log.noformat")).filter(_.toLowerCase == "true").map(_ => "--COLORLESS")
     if (System.getProperty("os.name").startsWith("Windows")) {
-      val process: ProcessBuilder = Process("cmd" :: "/c" :: "gulp" :: "--gulpfile=" + fileName :: args ::: maybeColorless.toList, base)
+      val process: ProcessBuilder = Process("cmd" :: "/c" :: "gulp" :: "--gulpfile=" + fileName :: args, base)
       println(s"Will run: ${process.toString} in ${base.getPath}")
       process.run()
     } else {
-      val process: ProcessBuilder = Process("gulp" :: "--gulpfile=" + fileName :: args ::: maybeColorless.toList , base)
+      val process: ProcessBuilder = Process("gulp" :: "--gulpfile=" + fileName :: args , base)
       println(s"Will run: ${process.toString} in ${base.getPath}")
       process.run()
     }
