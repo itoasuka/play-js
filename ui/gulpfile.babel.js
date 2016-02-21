@@ -153,7 +153,7 @@ gulp.task('karma', (cb) => {
     configFile: env.karmaConfig,
     autoWatch: false,
     singleRun: true,
-    reporters: ['dots', 'coverage', 'junit'],
+    reporters: ['nyan', 'coverage', 'junit'],
     colors: true,
     webpack: config
   }, cb).start();
