@@ -1,12 +1,14 @@
 const path = require('path');
 const webpack = require('webpack');
 
+const env = require('./env.js');
+
 module.exports = {
   entry: {
-    app: ['./app/webpack/main.js']
+    app: [path.join(env.webpackBase, 'main.js')]
   },
   output: {
-    path: path.resolve(__dirname, 'build/assets'),
+    path: env.distAssetsDir,
     publicPath: '/assets/',
     filename: 'bundle.js'
   },
@@ -24,7 +26,7 @@ module.exports = {
       {
         test: /\.jsx?/,
         exclude: [
-          path.resolve('node_modules/')
+          env.nodeModules
         ],
         loader: 'eslint-loader'
       }
@@ -37,9 +39,13 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: [
-          path.resolve('node_modules/')
+          env.nodeModules
         ],
         loader: 'babel'
+      },
+      {
+        test: /\.json$/,
+        loader: 'json'
       }
     ]
   }

@@ -10,10 +10,6 @@ Reflect.deleteProperty(webpackConfig, 'entry');
 Reflect.deleteProperty(webpackConfig, 'output');
 webpackConfig.devtool = 'inline-source-map';
 webpackConfig.babel = testBabelConfig;
-webpackConfig.module.loaders.push({
-  test: /\.json$/,
-  loader: 'json'
-});
 webpackConfig.node = {
   fs: 'empty'
 };

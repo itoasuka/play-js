@@ -1,6 +1,15 @@
 // Karma configuration
 // Generated on Thu Feb 18 2016 08:03:01 GMT+0900 (JST)
-const webpackConfig = require('./karma.webpack.conf.js');
+const path = require('path');
+
+const env = require('./env.js');
+const webpackConfig = require(env.karmaWebpackConfig);
+
+const htmlFixtures = path.join(env.testDir, 'fixtures/**/*.html');
+
+const preprocessors = {};
+preprocessors[htmlFixtures] = 'html2js';
+preprocessors[env.testEntryPoint] = ['webpack', 'sourcemap'];
 
 module.exports = function(config) {
   config.set({
@@ -16,8 +25,8 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'test/fixtures/**/*.html',
-      'test/test_index.js'
+      htmlFixtures,
+      env.testEntryPoint
     ],
 
 
@@ -28,10 +37,7 @@ module.exports = function(config) {
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-    preprocessors: {
-      'test/**/*.html': 'html2js',
-      'test/test_index.js': ['webpack', 'sourcemap']
-    },
+    preprocessors: preprocessors,
 
 
     // test results reporter to use
@@ -40,11 +46,11 @@ module.exports = function(config) {
     reporters: ['nyan'],
 
     junitReporter: {
-      outputDir: 'build/test-reports'
+      outputDir: path.join(env.outputBase, 'test-reports')
     },
 
     coverageReporter: {
-      dir: 'build/coverage-reports/',
+      dir: path.join(env.outputBase, 'coverage-reports'),
       reporters: [
         {
           type: 'html'
