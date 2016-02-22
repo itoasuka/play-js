@@ -15,8 +15,9 @@ export default class Hello extends React.Component {
 
   componentDidMount() {
     this.promise = greeting().then((res) => {
-      this.promise = null;
       this.setState(res);
+    }).finally(() => {
+      this.promise = null;
     });
   }
 

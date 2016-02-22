@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 import assert from 'power-assert';
-import superagent from 'superagent';
 
 import Hello from '../app/webpack/component/Hello.jsx';
 
@@ -44,7 +43,14 @@ describe('main', () => {
           assert(elem[0].textContent === 'こんにちは、世界！');
         } catch (e) {
           reject(e);
+          return;
         }
+
+        assert(rendered.promise === null);
+
+        ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(rendered).parentNode);  
+
+        assert(rendered.promise === null);
 
         resolve();
       }, 0);
@@ -57,5 +63,18 @@ describe('main', () => {
     ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(rendered).parentNode);  
 
     assert(spy.calledOnce);
+
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        try {
+          assert(rendered.promise === null);
+        } catch (e) {
+          reject(e);
+          return;
+        }
+
+        resolve();
+      }, 0);
+    });
   });
 });
