@@ -151,6 +151,20 @@ gulp.task('build', ['clean'], (cb) => {
  */
 gulp.task('karma', (cb) => {
   const config = Object.assign({}, require(env.karmaWebpackConfig));
+  // できるだけプロダクトコードに近い状態でテストを行う
+  config.plugins = [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': '"production"',
+      '__DEV__': false
+    }),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.UglifyJsPlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.optimize.AggressiveMergingPlugin(),
+    new webpack.ProvidePlugin({
+      'Promise': 'bluebird'
+    })
+  ];
   config.isparta = {
     embedSource: true,
     noAutoWrap: true
