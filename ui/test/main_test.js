@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 import assert from 'power-assert';
 
+import { deferTest } from './test-utils.js';
 import Hello from '../app/webpack/component/Hello.jsx';
 
 describe('main', () => {
@@ -35,25 +36,16 @@ describe('main', () => {
 
     server.respond();
 
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        try {
-          const elem = TestUtils.scryRenderedDOMComponentsWithTag(rendered, 'div');
-          assert(elem.length === 1);
-          assert(elem[0].textContent === 'こんにちは、世界！');
-        } catch (e) {
-          reject(e);
-          return;
-        }
+    return deferTest(() => {
+      const elem = TestUtils.scryRenderedDOMComponentsWithTag(rendered, 'div');
+      assert(elem.length === 1);
+      assert(elem[0].textContent === 'こんにちは、世界！');
 
-        assert(rendered.promise === null);
+      assert(rendered.promise === null);
 
-        ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(rendered).parentNode);  
+      ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(rendered).parentNode);  
 
-        assert(rendered.promise === null);
-
-        resolve();
-      }, 0);
+      assert(rendered.promise === null);
     });
   });
   it('あいさつをあきらめる', () => {
@@ -63,18 +55,9 @@ describe('main', () => {
     ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(rendered).parentNode);  
 
     assert(spy.calledOnce);
-
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        try {
-          assert(rendered.promise === null);
-        } catch (e) {
-          reject(e);
-          return;
-        }
-
-        resolve();
-      }, 0);
+    
+    return deferTest(() => {
+      assert(rendered.promise === null);
     });
   });
 });
