@@ -60,4 +60,31 @@ describe('main', () => {
       assert(rendered.promise === null);
     });
   });
+  it('あいさつがない', () => {
+    const head = {
+      'Content-Type': 'application/json'
+    };
+    const body = JSON.stringify('見つからない、世界！');
+
+    server.respondWith('GET', /\/0\/greeting/, [ 404, head, body ]);
+
+    const rendered = TestUtils.renderIntoDocument(<Hello />);
+    const elem = TestUtils.scryRenderedDOMComponentsWithTag(rendered, 'div');
+    assert(elem.length === 1);
+    assert(elem[0].textContent === 'おまちください');
+
+    server.respond();
+
+    return deferTest(() => {
+      const elem = TestUtils.scryRenderedDOMComponentsWithTag(rendered, 'div');
+      assert(elem.length === 1);
+      assert(elem[0].textContent === '見つからない、世界！');
+
+      assert(rendered.promise === null);
+
+      ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(rendered).parentNode);  
+
+      assert(rendered.promise === null);
+    });
+  });
 });
