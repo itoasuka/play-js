@@ -95,7 +95,6 @@ module.exports = function(config) {
     webpack: webpackConfig,
 
     webpackMiddleware: {
-      quiet: true,
       noInfo: true
     }
   });

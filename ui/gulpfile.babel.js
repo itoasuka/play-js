@@ -157,13 +157,16 @@ gulp.task('karma', (cb) => {
   };
   // eslint は実行しない。eslint タスクを使用すること。
   config.module.preLoaders = config.module.preLoaders.filter((e) => e.loader !== 'eslint-loader'); 
+  // ナマ babel を適用するのはテストコードのみ
   config.module.loaders = config.module.loaders.map((e) => {
     if (e.loader === 'babel') {
+      e.exclude = e.exclude || [];
       e.exclude.push(env.webpackBase);
     }
 
     return e;
   });
+  // プロダクトコードには isparta を使用してカバレッジ用の変換をかける
   config.module.loaders.push({
     test: /\.jsx?/,
     include: env.webpackBase,
