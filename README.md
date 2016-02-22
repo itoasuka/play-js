@@ -14,9 +14,8 @@ sbt で gulp をキックする部分は [この記事](http://qiita.com/mmizuta
 
 で、play が開発モードで起動するわけですが、同時に webpack-dev-server も起動します。
 
-ブラウザで動作確認する場合は、従来の Play Framework のように [http://localhost:9000/](http://localhost:9000/)
-を使用してももちろんかまいませんが、[http://localhost:8080/webpack-dev-server/](http://localhost:8080/webpack-dev-server/)
-にアクセスすることにより、webpack-dev-server の自動リフレッシュ機能の恩恵を得ることができます。
+ブラウザで動作確認する場合は、従来の Play Framework のどおり [http://localhost:9000/](http://localhost:9000/)
+にアクセスしてください。webpack-dev-server の自動リフレッシュ機能の恩恵を得ることもできます。
 
 
 サーバサイドの構成

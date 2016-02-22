@@ -11,6 +11,7 @@
   <body>
     <div id="greeting" class="greeting"></div>
     @if(play.api.Play.isDev) {
+      <script src="http://localhost:8080/webpack-dev-server.js"></script>
       <script src="http://localhost:8080/assets/bundle.js"></script>
     } else {
       <script src="@routes.Assets.versioned("bundle.js")"></script>
