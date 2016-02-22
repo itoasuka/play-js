@@ -1,37 +1,41 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 
-import { greeting } from '../util.js';
+import { callGreeting, cancelGreeting } from '../actions';
 
-export default class Hello extends React.Component {
+class Hello extends React.Component {
   static get displayName() {
     return 'Hello';
   }
 
+  static get propTypes() {
+    return {
+      dispatch: PropTypes.func.isRequired,
+      greetings: PropTypes.shape({
+        greeting:PropTypes.string
+      })
+    };
+  }
+
   constructor(props) {
     super(props);
-    this.state = {greeting: 'おまちください'};
-    this.promise = null;
   }
 
   componentDidMount() {
-    this.promise = greeting().then((res) => {
-      this.setState(res);
-    }).catch((error) => {
-      this.setState({greeting: error.body});
-    }).finally(() => {
-      this.promise = null;
-    });
+    this.props.dispatch(callGreeting());
   }
 
   componentWillUnmount() {
-    if (this.promise) {
-      this.promise.cancel();
-    }
+    this.props.dispatch(cancelGreeting());
   }
 
   render() {
     return (
-      <div>{this.state.greeting}</div>
+      <div>{this.props.greetings.greeting}</div>
     );
   }
 }
+
+export default connect((state) => ({
+  greetings: state.greetings
+}))(Hello);

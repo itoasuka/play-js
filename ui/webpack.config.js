@@ -5,7 +5,7 @@ const env = require('./env.js');
 
 module.exports = {
   entry: {
-    app: [path.join(env.webpackBase, 'main.js')]
+    app: [path.join(env.webpackBase, 'index.js')]
   },
   output: {
     path: env.distAssetsDir,
@@ -29,7 +29,8 @@ module.exports = {
       {
         test: /\.jsx?/,
         exclude: [
-          env.nodeModules
+          env.nodeModules,
+          env.testDir
         ],
         loader: 'eslint-loader'
       }
