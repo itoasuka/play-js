@@ -119,7 +119,7 @@ object PlayGulp {
         var process: Option[Process] = None
 
         override def beforeStarted(): Unit = {
-          process = Some(runGulp(base, fileName, "watch" :: Nil))
+          process = Some(runGulp(base, fileName, "watch" :: "--play" :: Nil))
         }
 
         override def afterStopped(): Unit = {

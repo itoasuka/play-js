@@ -8,12 +8,21 @@ import karma from 'karma';
 import path from 'path';
 import fs from 'fs';
 import mkdirp from 'mkdirp';
+import jsonServer from 'json-server';
+import minimist from 'minimist';
 
 import env from './env.js';
 
 const $ = gulpLoadPlugins();
 
+/**
+ * 出荷用アセットファイルを全て指定するためのもの
+ *
+ * @type {string}
+ */
 const allDistAssets = path.join(env.distAssetsDir, '**/*');
+
+const args = minimist(process.argv.slice(2));
 
 /**
  * md5 ファイルを作成するストリームを返します。
@@ -57,18 +66,30 @@ gulp.task('webpack-dev-server', () => {
     stats: {
       colors: true
     },
-    contentBase: 'http://localhost:9000'
-  }).listen(8080, 'localhost', (err) => {
+    contentBase: (args.play) ? 'http://localhost:9000' : env.outputBase,
+    proxy: {
+      '/0/*': {
+        target: `http://localhost:${env.serverPort}/`,
+        secure: false
+      }
+    }
+  }).listen(env.webpackDevServerPort, 'localhost', (err) => {
     if(err) throw new $.util.PluginError('webpack-dev-server', err);
 
-    $.util.log('[webpack-dev-server]', 'http://localhost:8080/webpack-dev-server/');
+    $.util.log('[webpack-dev-server]', `http://localhost:${env.webpackDevServerPort}/webpack-dev-server/`);
   });
 });
 
 /*
  * リソース監視を開始する。
  */
-gulp.task('watch', ['webpack-dev-server', 'sass:watch']);
+(function () {
+  const dep = ['webpack-dev-server', 'sass:watch'];
+  if (!args.play) {
+    dep.push('html:watch', 'json-server');
+  }
+  gulp.task('watch', dep);
+}());
 
 /*
  * Webpack でリソースをまとめる。
@@ -203,6 +224,34 @@ gulp.task('sass', () => {
 /*
  * SASS 対象リソースの監視を行う。
  */
-gulp.task('sass:watch', () => {
+gulp.task('sass:watch', ['sass'], () => {
   gulp.watch(env.sassSrc, ['sass']);
+});
+
+/*
+ * モック API サーバを起動する。
+ */
+gulp.task('json-server', () => {
+  const server = jsonServer.create();
+  server.use(jsonServer.defaults());
+  
+  const router = jsonServer.router('db.json');
+  server.use(router);
+
+  server.listen(env.serverPort);
+});
+
+/*
+ * HTML を移動する（webpack-dev-serverで参照するため）
+ */
+gulp.task('html', () => {
+  return gulp.src(env.htmlSrc)
+    .pipe(gulp.dest(env.outputBase));
+});
+
+/*
+ * HTML の監視を行う。
+ */
+gulp.task('html:watch', ['html'], () => {
+  gulp.watch(env.htmlSrc, ['html']);
 });

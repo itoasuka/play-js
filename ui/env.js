@@ -31,7 +31,7 @@ env.webpackBase = path.resolve(env.inputBase, 'webpack');
 /**
  * Webpack で扱う JavaScript ファイル
  *
- * @type {string}
+ * @type {array}
  */
 env.webpackJs = [
   path.join(env.webpackBase, '**/*.js'),
@@ -39,13 +39,22 @@ env.webpackJs = [
 ];
 
 /**
- * SASS で処理するソースの置き場
+ * SASS で処理するソース
  *
- * @type {string}
+ * @type {array}
  */
 env.sassSrc = [
   path.resolve(env.inputBase, 'sass/**/*.scss'),
   path.resolve(env.inputBase, 'sass/**/*.sass')
+];
+
+/**
+ * HTML ソース
+ *
+ * @type {array}
+ */
+env.htmlSrc = [
+  path.resolve(env.inputBase, '**/*.html')
 ];
 
 /**
@@ -96,5 +105,19 @@ env.distAssetsDir = path.resolve(env.outputBase, 'assets');
  * @type {string}
  */
 env.nodeModules = path.resolve(__dirname, 'node_modules');
+
+/**
+ * webpack-dev-server のポート番号
+ *
+ * @type {number}
+ */
+env.webpackDevServerPort = 8080;
+
+/**
+ * 開発用サーバサイドのポート番号
+ *
+ * @type {number}
+ */
+env.serverPort = 9000;
 
 module.exports = env;
