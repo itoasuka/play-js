@@ -73,7 +73,7 @@ gulp.task('webpack-dev-server', () => {
         secure: false
       }
     }
-  }).listen(env.webpackDevServerPort, 'localhost', (err) => {
+  }).listen(env.webpackDevServerPort, '0.0.0.0', (err) => {
     if(err) throw new $.util.PluginError('webpack-dev-server', err);
 
     $.util.log('[webpack-dev-server]', `http://localhost:${(args.play) ? env.serverPort : env.webpackDevServerPort}/`);
