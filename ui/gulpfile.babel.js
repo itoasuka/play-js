@@ -49,7 +49,7 @@ function md5() {
 }
 
 /*
- * ディレクトリを削除する
+ * 出力ディレクトリを削除する
  */
 gulp.task('clean', del.bind(null, [env.outputBase]));
 
