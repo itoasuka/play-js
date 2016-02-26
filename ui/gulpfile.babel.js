@@ -278,5 +278,5 @@ gulp.task('html:watch', ['html'], () => {
  */
 gulp.task('bower', () => {
   return gulp.src('bower_components/**/*')
-    .pipe(gulp.dest(path.join(env.outputBase, '/assets/lib')));
+    .pipe(gulp.dest(path.join(env.outputBase, '/bower_components/')));
 });

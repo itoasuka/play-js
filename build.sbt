@@ -15,7 +15,9 @@ libraryDependencies ++= Seq(
   cache,
   ws,
   "org.scalatest" %% "scalatest" % "2.2.1" % Test,
-  "org.scalatestplus" %% "play" % "1.4.0" % Test
+  "org.scalatestplus" %% "play" % "1.4.0" % Test,
+  "org.webjars" %% "webjars-play" % "2.4.0-1",
+  "org.webjars" % "react" % "0.14.7"
 )
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
