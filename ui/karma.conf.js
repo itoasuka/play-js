@@ -25,6 +25,8 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      'bower_components/react/react-with-addons.js',
+      'bower_components/react/react-dom.js',
       htmlFixtures,
       env.testEntryPoint
     ],

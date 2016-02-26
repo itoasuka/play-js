@@ -84,7 +84,7 @@ gulp.task('webpack-dev-server', () => {
  * リソース監視を開始する。
  */
 (function () {
-  const dep = ['webpack-dev-server', 'sass:watch'];
+  const dep = ['webpack-dev-server', 'sass:watch', 'bower'];
   if (!args.play) {
     dep.push('html:watch', 'json-server');
   }
@@ -143,7 +143,7 @@ gulp.task('gzip', () => {
  * すべてのリソースを処理して出荷品質にする。
  */
 gulp.task('build', ['clean'], (cb) => {
-  runSequence(['webpack', 'sass'], 'md5', 'gzip', cb);
+  runSequence(['webpack', 'sass', 'html', 'bower'], 'md5', 'gzip', cb);
 });
 
 /*
@@ -271,4 +271,12 @@ gulp.task('html', () => {
  */
 gulp.task('html:watch', ['html'], () => {
   gulp.watch(env.htmlSrc, ['html']);
+});
+
+/*
+ * bower を配置する。
+ */
+gulp.task('bower', () => {
+  return gulp.src('bower_components/**/*')
+    .pipe(gulp.dest(path.join(env.outputBase, '/assets/lib')));
 });

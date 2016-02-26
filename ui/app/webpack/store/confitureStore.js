@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware, compose } from 'redux';
+import {createStore, applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from '../reducers';
 
@@ -8,8 +8,6 @@ const finalCreateStore = compose(
 )(createStore);
 
 export default function configureStore(initialState) {
-  const store = finalCreateStore(rootReducer, initialState);
-
-  return store;
+  return finalCreateStore(rootReducer, initialState);
 }
 

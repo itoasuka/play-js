@@ -5,14 +5,14 @@ import { Provider } from 'react-redux';
 import configureStore from './store/confitureStore';
 import Hello from './component/Hello.jsx';
 
-export default function () {
+const main = () => {
   const store = configureStore();
-  const main = (
+  return (
     <Provider store={store}>
       <Hello />
     </Provider>
   );
+};
 
-  return main;
-}
+export default main;
 

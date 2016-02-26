@@ -1,16 +1,16 @@
 import * as types from '../constants/ActionTypes';
-import { greeting } from '../util';
+import {greeting} from '../util';
 
 function setGreeting(greeting) {
-  return { type: types.GREETING, greeting };
+  return {type: types.GREETING, greeting};
 }
 
 function storeGreetingPromise(promise) {
-  return { type: types.STORE_GREETING_PROMISE, promise };
+  return {type: types.STORE_GREETING_PROMISE, promise};
 }
 
 export function cancelGreeting() {
-  return { type: types.CANCEL_GREETING };
+  return {type: types.CANCEL_GREETING};
 }
 
 export function callGreeting() {

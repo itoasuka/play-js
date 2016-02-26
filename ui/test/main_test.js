@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 import assert from 'power-assert';
@@ -51,6 +50,7 @@ describe('main', () => {
   });
   it('あいさつをあきらめる', () => {
     const rendered = TestUtils.renderIntoDocument(main());
+    assert(rendered.store.getState().greetings.promise !== null);
 
     const spy = sinon.spy(rendered.store.getState().greetings.promise, "cancel");
     ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(rendered).parentNode);  

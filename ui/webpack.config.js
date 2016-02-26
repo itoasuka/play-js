@@ -12,6 +12,11 @@ module.exports = {
     publicPath: '/assets/',
     filename: 'bundle.js'
   },
+  externals: {
+    'react': 'React',
+    'react-dom': 'ReactDOM',
+    'react-addons-test-utils': 'React.addons.TestUtils'
+  },
   resolve: {
     extensions: ['', '.js', '.jsx']
   },
@@ -52,5 +57,8 @@ module.exports = {
         loader: 'json'
       }
     ]
+  },
+  node:  {
+    fs: 'empty'
   }
 };

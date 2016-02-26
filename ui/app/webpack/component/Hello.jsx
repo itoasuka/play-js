@@ -1,7 +1,7 @@
-import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
+import React, {PropTypes} from 'react';
+import {connect} from 'react-redux';
 
-import { callGreeting, cancelGreeting } from '../actions';
+import {callGreeting, cancelGreeting} from '../actions';
 
 class Hello extends React.Component {
   static get displayName() {
@@ -12,7 +12,7 @@ class Hello extends React.Component {
     return {
       dispatch: PropTypes.func.isRequired,
       greetings: PropTypes.shape({
-        greeting:PropTypes.string
+        greeting: PropTypes.string
       })
     };
   }
