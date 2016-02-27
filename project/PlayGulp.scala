@@ -76,7 +76,8 @@ object PlayGulp {
     commands <++= gulpDirectory {
       base =>
         Seq(
-          "npm"
+          "npm",
+          "bower"
         ).map(cmd(_, base))
     }
   )
