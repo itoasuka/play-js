@@ -4,7 +4,8 @@ Play + JavaScript
 このプロジェクトはサーバサイドは [Play Framework](https://www.playframework.com/) で、クライアントサイドは
 gulp + webpack + babel で作成するパターンのサンプルです。
 
-クライアントサイドプロジェクトは `ui` フォルダに展開する Git サブモジュールです。
+クライアントサイドプロジェクトは `ui` フォルダに展開する Git サブモジュールです。詳しくは [https://github.com/itoasuka/cs4pf](https://github.com/itoasuka/cs4pf)
+を参照してください。
 
 sbt で gulp をキックする部分は [この記事](http://qiita.com/mmizutani/items/9def492ea7bbfb35a57a) を~~まるパク~~参考にさせていただきました。
 
