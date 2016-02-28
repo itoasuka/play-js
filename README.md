@@ -4,6 +4,8 @@ Play + JavaScript
 このプロジェクトはサーバサイドは [Play Framework](https://www.playframework.com/) で、クライアントサイドは
 gulp + webpack + babel で作成するパターンのサンプルです。
 
+クライアントサイドプロジェクトは `ui` フォルダに展開する Git サブモジュールです。
+
 sbt で gulp をキックする部分は [この記事](http://qiita.com/mmizutani/items/9def492ea7bbfb35a57a) を~~まるパク~~参考にさせていただきました。
 
 
@@ -12,47 +14,22 @@ sbt で gulp をキックする部分は [この記事](http://qiita.com/mmizuta
 
     sbt run
 
-で、play が開発モードで起動するわけですが、同時に webpack-dev-server も起動します。
+で、play が開発モードで起動するわけですが、同時に browser-sync も起動します。
 
-ブラウザで動作確認する場合は、従来の Play Framework のどおり [http://localhost:9000/](http://localhost:9000/)
-にアクセスしてください。webpack-dev-server の自動リフレッシュ機能の恩恵を得ることもできます。
+ブラウザで動作確認する場合は、[http://localhost:3000/](http://localhost:33000/)
+にアクセスしてください。browser-sync 経由となり自動リフレッシュ機能の恩恵を得ることもできます。
 
 
-サーバサイドの構成
-------------------
+テスト
+------
 
 テストは、[ScalaTest](http://www.scalatest.org/) で書きなおしています。また、ブラウザによるテストは HtmlUnit ではなく Chrome と Firefox
 を使用します。また、[Scoverage](http://scoverage.org/) によるカバレッジを取得します。
 
     sbt clean coverage test coverageReport
 
-test タスクを実行すると、gulp build も実行します。
-
-run タスクを実行すると、gulp watch も実行します。
-
-
-クライアントサイドの構成
-------------------------
-
-[gulp](http://gulpjs.com/) + [webpack](https://webpack.github.io/) + [Babel](https://babeljs.io/) でビルドします。
-
-テストは、[Karma](https://karma-runner.github.io/) + [Mocha](https://mochajs.org/) +
-[power-assert](https://github.com/power-assert-js/power-assert) です。Chrome と Firefox でテストします。
-Web API 呼び出しの部分は [Sinon.JS](http://sinonjs.org/) を使用したモックを使用しています。
-
-カバレッジもとり、cobertura 形式でレポートを出力します。
-
-### gulp のタスク
-
-|タスク     |説明                                                             |
-|-----------|-----------------------------------------------------------------|
-|clean      |build ディレクトリを削除します。                                 |
-|build      |JavaScript 類を bundle.js というファイル名でひとつにまとめます。 |
-|test       |テストを実行します。karma タスクのエイリアスです。               |
-|watch      |webpack-dev-server を起動します。                                |
-|karma:watch|karma を singleRun: false で起動します。                         |
-|eslint     |eslint のレポートを出力します。                                  |
-|css        |sass の処理を行います。                                          |
+test タスクを実行すると、クライアントサイドの `gulp build` も実行します。これによってサーバサイド主導の Selenium
+によるテストでもクライアントサイドのアーティファクトを使用することができます。
 
 
 なぜ Scala.js を使わないのか？

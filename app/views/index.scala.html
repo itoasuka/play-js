@@ -13,8 +13,7 @@
     @if(play.api.Play.isDev) {
       <script src="@routes.WebJarAssets.at(WebJarAssets.locate("react.js"))"></script>
       <script src="@routes.WebJarAssets.at(WebJarAssets.locate("react-dom.js"))"></script>
-      <script src="http://localhost:8080/webpack-dev-server.js"></script>
-      <script src="http://localhost:8080/assets/bundle.js"></script>
+      <script src="/assets/bundle.js"></script>
     } else {
       <script src="@routes.WebJarAssets.at(WebJarAssets.locate("react.min.js"))"></script>
       <script src="@routes.WebJarAssets.at(WebJarAssets.locate("react-dom.min.js"))"></script>
